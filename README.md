@@ -18,7 +18,7 @@ class MyMeta(DefaultMeta):
     def __init__(self, ordered_locales: List[str]):
         self.ordered_locales = ordered_locales
 
-    @propery
+    @property
     def locales(self):
         # translate messages within wtforms depending on the request's locale(s)
         return self.ordered_locales
@@ -36,12 +36,13 @@ class MyBaseForm(Form):
 The example above will not only translate the name field's label but also internal wtforms messages
 such as field errors.
 
-In cases where an external function is responsible for creating the field or if you want to
-precompute certain objects (e.g. the GNUTranslations object), the following can be done:
+In cases where an external function is responsible for creating the field (useful for reusing field
+factories) or if you want to precompute certain objects (e.g. the GNUTranslations object), the
+following can be done:
 
 ```python
 @field(name="name")
-def name_field(_):
+def name_field(_cls, _):  # since the associated attribute is bound, we need the class type as first arg
     return StringField(label=_("Name"))
 
 class MyBaseForm(Form):

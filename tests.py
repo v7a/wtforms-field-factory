@@ -82,3 +82,26 @@ def test_disabled_field():
         TestForm(True).test2  # dependent on class attribute
 
     TestForm(True).test  # should not raise
+
+
+def test_reuse_factory():
+    @field(name="test")
+    def factory(_cls, arg):
+        return StringField(label=arg)
+
+    class TestForm1(Form):
+        attrib1 = factory
+
+        def __init__(self, arg, **kwargs):
+            self.set_factory_args(arg)
+            super().__init__(**kwargs)
+
+    class TestForm2(Form):
+        attrib2 = factory
+
+        def __init__(self, arg, **kwargs):
+            self.set_factory_args(arg)
+            super().__init__(**kwargs)
+
+    assert TestForm1("test").test.label.text == "test"
+    assert TestForm2("test").test.label.text == "test"
