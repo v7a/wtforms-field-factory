@@ -57,7 +57,7 @@ The important part is that you now have an explicit contract and do not rely on 
 
 
 ## Contributing
-Before comitting, run the following and check if it succeeds:
+Before committing, run the following and check if it succeeds:
 ```sh
 pip install --user -r requirements-dev.txt && \
 black wtforms_field_factory.py && \
