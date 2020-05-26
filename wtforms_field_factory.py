@@ -7,6 +7,8 @@ from wtforms import Field
 from wtforms.form import BaseForm
 from wtforms.meta import DefaultMeta
 
+__version__ = "0.1"
+
 
 class _FieldFactory(Protocol):
     field_name: str
